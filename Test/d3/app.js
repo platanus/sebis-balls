@@ -1,7 +1,7 @@
 window.onload = function()
 {
   var img = new Image();
-  img.src = 'img.png'; 
+  img.src = 'yo.jpg'; 
   var check = false;
   var pixel = [];
   img.onload = function ()
@@ -18,9 +18,9 @@ window.onload = function()
       var imgData = context.getImageData(0, 0, canvas.height, canvas.width);
       for(i = 0; i < imgData.data.length; i+=4){
             var point = new Point(x * scale + offsetx, y * scale + offsety);
-            var size = 10;
+            var size = 20;
             randomPositions.push(point);
-            dataset.push(new Duck(Math.random() * width, Math.random() * height, 1 / (2 * size), 1 / (6 * size), (Math.random() * Math.PI), (Math.PI *(Math.random()+1))/(size), size, d3.rgb(imgData.data[i],
+            dataset.push(new Duck(Math.random() * width, Math.random() * height, 30 / size, 1 / (6 * size), (Math.random() * Math.PI), (Math.PI *(Math.random()+1))/(size), size, d3.rgb(imgData.data[i],
             imgData.data[i + 1],
             imgData.data[i + 2])));
             x++;
@@ -75,13 +75,14 @@ window.onload = function()
       function displ()
       {
         var circles = svg
-          .selectAll("circle")
+          .selectAll("rect")
         	.data(dataset)
         	.enter()
-        	.append("circle")
-          .attr("cx", function(d) { return d.x; } )
-          .attr("cy", function(d) { return d.y; } )
-          .attr("r", function(d) { return d.size; } )
+        	.append("rect")
+          .attr("x", function(d) { return d.x; } )
+          .attr("y", function(d) { return d.y; } )
+          .attr("width", function(d) { return d.size/2; } )
+          .attr("height", function(d) { return d.size/2; } )
           .attr("fill", function(d){ return d.color; });
       }
       function update()
@@ -133,14 +134,14 @@ window.onload = function()
           for (var i = 0; i < dataset.length; i++) {
             dataset[i].maxMs = controls.maxSpeed/ (dataset[i].size);
             dataset[i].acc = 2*controls.accel/dataset[i].size;
-            dataset[i]=stalk(dataset[i], mouseMoving, mouseX, mouseY, randomPositions[i].x, randomPositions[i].y);
+            dataset[i] = stalk(dataset[i], mouseMoving, mouseX, mouseY, randomPositions[i].x, randomPositions[i].y);
             //dataset[i]=warp(dataset[i], width, height);
 
           };
-        svg.selectAll("circle")
+        svg.selectAll("rect")
         .data(dataset)
-        .attr("cx", function(d) { return d.x; })
-        .attr("cy", function(d) { return d.y; });
+        .attr("x", function(d) { return d.x; })
+        .attr("y", function(d) { return d.y; });
         mouseMoving = false;
       }
       window.setInterval(update,5);

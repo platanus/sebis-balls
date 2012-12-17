@@ -1,6 +1,6 @@
 controls = {
-	maxSpeed: 1/2,
-	accel: 1/6
+	maxSpeed: 30,
+	accel: 5
 };
 
 $(function() {
@@ -13,7 +13,7 @@ $(function() {
 
     $( ".slider.accel" ).slider({ min: 0, max: 100, value: controls.accel,
     	change: function( event, ui ) {
-    		controls.maxSpeed = ui.value;
+    		controls.accel = ui.value;
     		$(event.target).closest("li").find("span").html(ui.value);
     	} 
     });

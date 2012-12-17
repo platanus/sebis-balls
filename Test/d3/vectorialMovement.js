@@ -85,6 +85,75 @@ function follow(mouseX,mouseY,object)
 	object.angle = angle;
 	return object;
 };
+function scape(mouseX,mouseY,object)
+{
+	var x = object.x;
+	var y = object.y;
+	var angle = object.angle;
+	var as = object.as;
+	var difX = mouseX - x;
+	var difY = mouseY - y
+	var followAngle = Math.atan(difY/difX);
+	while(angle > Math.PI * 2)
+	{
+		angle -= Math.PI * 2;
+	}
+	while(angle < 0)
+	{
+		angle += Math.PI * 2;
+	}
+	while(followAngle > Math.PI * 2)
+	{
+		followAngle -= Math.PI * 2;
+	}
+	if(difX > 0 && difY > 0)
+	{
+	}
+	else if(difX > 0 && difY < 0)
+	{
+		followAngle += Math.PI*2;
+	}
+	else if(difX < 0 && difY > 0)
+	{
+		followAngle += Math.PI;
+	}
+	else
+	{
+		followAngle += Math.PI;
+	}
+		if(followAngle - angle > Math.PI)
+		{
+			angle += Math.PI*2;
+		}
+		if(angle - followAngle > Math.PI)
+		{
+			followAngle += Math.PI*2;
+		}
+			if(angle < followAngle)
+			{
+				if(Math.abs(angle - followAngle) < as)
+				{
+					angle -= Math.abs(angle - followAngle);
+				}
+				else
+				{
+					angle -= as;
+				}
+			}
+			else if(angle > followAngle)
+			{
+				if(Math.abs(angle - followAngle) < as)
+				{
+					angle += Math.abs(angle - followAngle);
+				}
+				else
+				{
+					angle += as;
+				}
+			}
+	object.angle = angle;
+	return object;
+};
 function warp(object,maxW,maxH)
 {
 	var x = object.x;
@@ -124,10 +193,14 @@ function realign(object, coordX, coordY)
 	}
 	object = follow(coordX, coordY, object);
 	object.ms = ms;
-	if(dist <= minDist)
+	if(dist <= minDist*2)
 	{
 		object.breaks();
 
+	}
+	else
+	{
+		object.accelerate()
 	}
 		var angle = object.angle;
 		object.x += Math.cos(angle)*ms;
@@ -136,10 +209,11 @@ function realign(object, coordX, coordY)
 };
 function stalk(object, moving, mouseX, mouseY, fixedX, fixedY)
 {
-	if(moving)
+	var dist = getDistance(object.x, object.y, mouseX, mouseY);
+	if(moving && dist <= 200)
 	{
 		object.accelerate();
-		object = follow(mouseX, mouseY, object);
+		object = scape(mouseX, mouseY, object);
 		object = vectorialAdvance(object);
 		return object;
 	}

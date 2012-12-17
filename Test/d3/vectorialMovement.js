@@ -186,6 +186,16 @@ function realign(object, coordX, coordY)
 	var acc = object.acc;
 	var as = object.as * 3;
 	var dist = getDistance(x, y, coordX, coordY);
+	if(dist <= 1)
+	{
+		object.acc = 0.1;
+		acc = 0.1;
+	}
+	else if(dist <= 100)
+	{
+		object.acc = 0.5;
+		acc = 0.5;
+	}
 	var minDist = (2 * ms) / acc;
 	if(dist == 0)
 	{

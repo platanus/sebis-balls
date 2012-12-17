@@ -20,7 +20,7 @@ window.onload = function()
             var point = new Point(x * scale + offsetx, y * scale + offsety);
             var size = 20;
             randomPositions.push(point);
-            dataset.push(new Duck(Math.random() * width, Math.random() * height, 30 / size, 1 / (6 * size), (Math.random() * Math.PI), (Math.PI *(Math.random()+1))/(size), size, d3.rgb(imgData.data[i],
+            dataset.push(new Duck(Math.random() * width, Math.random() * height, 30 / size, 1 / (6 * size), (Math.random() * Math.PI * 2), (Math.PI * 2)/(size), size, d3.rgb(imgData.data[i],
             imgData.data[i + 1],
             imgData.data[i + 2])));
             x++;

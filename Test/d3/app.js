@@ -14,7 +14,7 @@ window.onload = function()
       height = window.innerHeight;
       dataset = [];
       var randomPositions = [];
-      var x = 0, y = 0, scale = 10, offsetx = 300, offsety = 50;
+      var x = 0, y = 0, scale = 10, offsetx = width/4, offsety = height/16;
       var imgData = context.getImageData(0, 0, canvas.height, canvas.width);
       for(i = 0; i < imgData.data.length; i+=4){
             var point = new Point(x * scale + offsetx, y * scale + offsety);

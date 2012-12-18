@@ -1,7 +1,7 @@
 window.onload = function()
 {
   var img = new Image();
-  img.src = 'yo.jpg'; 
+  img.src = "img.jpg"; 
   var check = false;
   var pixel = [];
   img.onload = function ()
@@ -14,7 +14,7 @@ window.onload = function()
       height = window.innerHeight;
       dataset = [];
       var randomPositions = [];
-      var x = 0, y = 0, scale = 10, offsetx = 300, offsety = 100;
+      var x = 0, y = 0, scale = 10, offsetx = 300, offsety = 50;
       var imgData = context.getImageData(0, 0, canvas.height, canvas.width);
       for(i = 0; i < imgData.data.length; i+=4){
             var point = new Point(x * scale + offsetx, y * scale + offsety);
@@ -31,37 +31,6 @@ window.onload = function()
               }
           }
       context.clearRect(0, 0, canvas.width, canvas.height);
-      /*for(var i = 0; i < IMAGE.length; i++)
-      {
-
-        switch (IMAGE[i]) {
-          case "0":
-            y++;
-            x = 0;
-            break;
-          case "@":
-            var point = new Point(x * scale + offsetx, y * scale + offsety);
-             
-              randomPositions.push(point);
-              var size = 1;
-              dataset.push(new Duck(Math.random() * width, Math.random() * height, 1 / (2 * size), 1 / (6 * size), (Math.random() * Math.PI), (2 * Math.PI)/(size), size, "black"));
-             
-            x++;
-            break;
-          case ",":
-          case ":":
-            var point = new Point(x * scale + offsetx, y * scale + offsety);
-             
-              randomPositions.push(point);
-            var size = 1;
-             dataset.push(new Duck(Math.random() * width, Math.random() * height, 1 / (2 * size), 1 / (6 * size), (Math.random() * Math.PI), (2 * Math.PI)/(size), size, "yellow"));
-            
-            x++;
-            break;
-          default:
-            x++;
-          }
-      }*/
       var lmouseCheck = false;
       var rmouseCheck = false;
       var mouseX = 0;
@@ -132,16 +101,15 @@ window.onload = function()
           {
           }
           for (var i = 0; i < dataset.length; i++) {
-            dataset[i].maxMs = controls.maxSpeed/ (dataset[i].size);
-            dataset[i].acc = 2*controls.accel/dataset[i].size;
-            dataset[i] = stalk(dataset[i], mouseMoving, mouseX, mouseY, randomPositions[i].x, randomPositions[i].y);
-            //dataset[i]=warp(dataset[i], width, height);
-
+            dataset[i].maxMs = controls.maxSpeed/ dataset[i].size;
+            dataset[i].acc = 2 * controls.accel/dataset[i].size;
+            dataset[i] = stalk(dataset[i], rmouseCheck, mouseMoving, mouseX, mouseY, randomPositions[i].x, randomPositions[i].y);
+            //dataset[i] = warp(dataset[i], width, height);
           };
         svg.selectAll("rect")
         .data(dataset)
         .attr("x", function(d) { return d.x; })
-        .attr("y", function(d) { return d.y; });
+        .attr("y", function(d) { return d.y; })
         mouseMoving = false;
       }
       window.setInterval(update,5);

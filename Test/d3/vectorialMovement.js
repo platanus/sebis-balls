@@ -217,10 +217,17 @@ function realign(object, coordX, coordY)
 		object.y += Math.sin(angle)*ms;
 	return object;
 };
-function stalk(object, moving, mouseX, mouseY, fixedX, fixedY)
+function stalk(object, rmousecheck, moving, mouseX, mouseY, fixedX, fixedY)
 {
 	var dist = getDistance(object.x, object.y, mouseX, mouseY);
-	if(moving && dist <= 200)
+	if(rmousecheck && dist <= controls.radius)
+	{
+		object.accelerate();
+		object = follow(mouseX, mouseY, object);
+		object = vectorialAdvance(object);
+		return object;
+	}
+	else if(moving && dist <= controls.radius)
 	{
 		object.accelerate();
 		object = scape(mouseX, mouseY, object);

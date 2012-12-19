@@ -220,7 +220,7 @@ function realign(object, coordX, coordY)
 function stalk(object, rmousecheck, moving, mouseX, mouseY, fixedX, fixedY)
 {
 	var dist = getDistance(object.x, object.y, mouseX, mouseY);
-	if(rmousecheck /*&& dist <= controls.radius*/)
+	if(rmousecheck && dist <= controls.radius)
 	{
 		object.accelerate();
 		object = follow(mouseX, mouseY, object);
